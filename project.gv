@@ -1,0 +1,38 @@
+digraph Workflow {
+rankdir=LR
+fontname=Courier; fontsize=18; labelloc=t
+label=main
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; color=white
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+sponsors_providing_dinner
+sponsors_providing_both_breakfast_and_lunch
+sponsors_in_NYC
+edge[fontname=Helvetica]
+}}
+subgraph cluster_input_ports_group_outer { label=""; color=white
+subgraph cluster_input_ports_group_inner { label=""; color=white
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Courier width=0.2]
+event_name_input_port [label=""]
+location_input_port [label=""]
+input_data_file_input_port [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; color=white
+subgraph cluster_output_ports_group_inner { label=""; color=white
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Courier width=0.2]
+"sponsors_providing_dinner.csv_output_port" [label=""]
+"sponsors_providing_both_breakfast_and_lunch.csv_output_port" [label=""]
+"sponsors_in_NYC.csv_output_port" [label=""]
+}}
+edge[fontname=Helvetica]
+event_name_input_port -> sponsors_providing_dinner [label=event_name]
+event_name_input_port -> sponsors_providing_both_breakfast_and_lunch [label=event_name]
+input_data_file_input_port -> sponsors_providing_dinner [label=input_data_file]
+input_data_file_input_port -> sponsors_providing_both_breakfast_and_lunch [label=input_data_file]
+input_data_file_input_port -> sponsors_in_NYC [label=input_data_file]
+location_input_port -> sponsors_in_NYC [label=location]
+edge[fontname=Helvetica]
+sponsors_providing_dinner -> "sponsors_providing_dinner.csv_output_port" [label="sponsors_providing_dinner.csv"]
+sponsors_providing_both_breakfast_and_lunch -> "sponsors_providing_both_breakfast_and_lunch.csv_output_port" [label="sponsors_providing_both_breakfast_and_lunch.csv"]
+sponsors_in_NYC -> "sponsors_in_NYC.csv_output_port" [label="sponsors_in_NYC.csv"]
+}
