@@ -1,0 +1,19 @@
+SQL query:
+
+Case 1:
+  Task 1:
+    SELECT * FROM menu
+    WHERE event ~* '.*DINNER.*';
+
+  Task 2:
+    SELECT * FROM
+    (SELECT * FROM menu
+    WHERE event ~* '.*BREAKFAST.*') as breakfastMenu
+    INNER JOIN
+    (SELECT * FROM menu
+    WHERE event ~* '.*LUNCH.*') as lunchMenu
+    ON breakfastMenu.sponsor = lunchMenu.sponsor
+
+Case 2:
+    SELECT * FROM menu
+    WHERE location = 'New York, NY';
