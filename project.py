@@ -2,6 +2,7 @@ import pandas as pd
 
 from enum import Enum
 from pandas import DataFrame
+from typing import List
 
 
 class Event(Enum):
@@ -26,9 +27,9 @@ def select_sponsor_by_event(event: Event):
     return sponsors
 
 
-def select_sponsor_by_location(location: str):
+def select_sponsor_by_locations(locations: List[str]):
     df = get_data()
-    sponsors = df.loc[df["place"] == location]
+    sponsors = df.loc[df["place"].isin(locations)]
     return sponsors
 
 
@@ -42,11 +43,11 @@ def process_result(data: DataFrame):
 
 def process_result_after_merging(data: DataFrame):
     # Process duplicated columns after merging action.
-    duplicated_columns = ['id_y', 'venue_y', 'place_y', 'city/town_y', 'state/country_y','physical_description_y',
-                          'occasion_y', 'notes_y', 'call_number_y', 'date_y', 'location_y','currency_y',
+    duplicated_columns = ['id_y', 'venue_y', 'place_y', 'city/town_y', 'state/country_y', 'physical_description_y',
+                          'occasion_y', 'notes_y', 'call_number_y', 'date_y', 'location_y', 'currency_y',
                           'currency_symbol_y', 'status_y', 'page_count_y', 'dish_count_y']
     data = data.drop(columns=duplicated_columns)
-    data = data.rename(columns={'id_x': 'id', 'venue_x': 'venue', 'place_x': 'place','city/town_x': 'city/town',
+    data = data.rename(columns={'id_x': 'id', 'venue_x': 'venue', 'place_x': 'place', 'city/town_x': 'city/town',
                                 'state/country_x': 'state/country', 'physical_description_x': 'physical_description',
                                 'occasion_x': 'occasion', 'notes_x': 'notes', 'call_number_x': 'call_number',
                                 'date_x': 'date', 'location_x': 'location', 'currency_x': 'currency',
@@ -114,12 +115,13 @@ def enact():
     # @PARAM location
     # @IN g  @AS input_data_file  @URI file: menu.csv
     # @OUT pp  @AS sponsors_in_NYC.csv
-    sponsors_in_NYC = select_sponsor_by_location("NEW YORK, NY")
+    sponsors_in_NYC = select_sponsor_by_locations(["NEW YORK, NY", "NEW YORK,NY", "NEW YORK", "NYC"])
     sponsors_in_NYC = process_result(sponsors_in_NYC)
     # print(sponsors_in_NYC.to_string())
     save_result(sponsors_in_NYC, "sponsors_in_NYC.csv")
     print("The total number of sponsors in New York City is:", len(sponsors_in_NYC))
     # @END sponsors_in_NYC
+
 
 # @END main
 
