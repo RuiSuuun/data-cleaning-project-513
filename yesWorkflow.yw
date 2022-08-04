@@ -1,0 +1,41 @@
+Load a CSV file as a data frame (df) using pandas
+Drop the following columns because all values are NaN
+One sponsor can have multiple similar events.
+This processing steps deduplicate the dataframe.
+Process duplicated columns after merging action.
+@BEGIN data_cleaning_for_Menu
+@PARAM event_name
+@PARAM location
+@IN Menu.csv  @URI file: Menu.csv
+@OUT sponsors_providing_dinner.csv
+@OUT sponsors_providing_both_breakfast_and_lunch.csv
+@OUT sponsors_in_NYC.csv
+@BEGIN OpenRefine_cleaning
+@IN input_data_file @AS Menu.csv  @URI file: Menu.csv
+@OUT pre_cleaned_data  @AS menu.csv
+@END OpenRefine_cleaning
+Case 1: Which sponsors offer breakfast/lunch/dinner?
+:return: DataFrame
+Task 1: Select sponsors providing specific event.
+@BEGIN sponsors_providing_dinner
+@PARAM event_name
+@IN pre_cleaned_data @AS menu.csv  @URI file: menu.csv
+@OUT output @AS sponsors_providing_dinner.csv
+print(sponsors_providing_dinner.to_string())
+@END sponsors_providing_dinner
+Task 2: Select sponsors providing multiple events simultaneously.
+@BEGIN sponsors_providing_both_breakfast_and_lunch
+@PARAM event_name
+@IN pre_cleaned_data @AS menu.csv  @URI file: menu.csv
+@OUT output @AS sponsors_providing_both_breakfast_and_lunch.csv
+print(sponsors_providing_both_breakfast_and_lunch.to_string())
+@END sponsors_providing_both_breakfast_and_lunch
+Case2:  Which sponsors are located in New York, NY?
+:return: DataFrame
+@BEGIN sponsors_in_NYC
+@PARAM location
+@IN pre_cleaned_data @AS menu.csv  @URI file: menu.csv
+@OUT output @AS sponsors_in_NYC.csv
+print(sponsors_in_NYC.to_string())
+@END sponsors_in_NYC
+@END data_cleaning_for_Menu

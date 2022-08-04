@@ -24,9 +24,12 @@ Source: https://github.com/yesworkflow-org/yw-prototypes
 3. YesWorkflow jar file, which is provided in git repo
 
 ### Generate and open YesWorkflow
-1. Generate .gv graph
+1. Generate .gv graph and .yw comment file
 ```
 java -jar yesworkflow-0.2.0-jar-with-dependencies.jar graph project.py > yesWorkflow.gv
+```
+```
+java -jar yesworkflow-0.2.0-jar-with-dependencies.jar extract project.py -c extract.listfile > yesWorkflow.yw
 ```
 2. Generate PDF file based on .gv graph
 ```
