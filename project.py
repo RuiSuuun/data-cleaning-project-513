@@ -60,14 +60,20 @@ def save_result(data: DataFrame, name: str):
     data.to_csv("output/" + name, index=False)
 
 
-# @BEGIN main
+# @BEGIN data_cleaning_for_Menu
 # @PARAM event_name
 # @PARAM location
-# @IN input_data_file  @URI file: menu.csv
+# @IN Menu.csv  @URI file: Menu.csv
 # @OUT sponsors_providing_dinner.csv
 # @OUT sponsors_providing_both_breakfast_and_lunch.csv
 # @OUT sponsors_in_NYC.csv
 def enact():
+
+    # @BEGIN OpenRefine_cleaning
+    # @IN input_data_file @AS Menu.csv  @URI file: Menu.csv
+    # @OUT pre_cleaned_data  @AS menu.csv
+    # @END OpenRefine_cleaning
+
     """
     Case 1: Which sponsors offer breakfast/lunch/dinner?
 
@@ -76,8 +82,8 @@ def enact():
     # Task 1: Select sponsors providing specific event.
     # @BEGIN sponsors_providing_dinner
     # @PARAM event_name
-    # @IN g  @AS input_data_file  @URI file: menu.csv
-    # @OUT pp  @AS sponsors_providing_dinner.csv
+    # @IN pre_cleaned_data @AS menu.csv  @URI file: menu.csv
+    # @OUT output @AS sponsors_providing_dinner.csv
     sponsors_providing_dinner = select_sponsor_by_event(Event.DINNER)
     sponsors_providing_dinner = process_result(sponsors_providing_dinner)
     # print(sponsors_providing_dinner.to_string())
@@ -88,8 +94,8 @@ def enact():
     # Task 2: Select sponsors providing multiple events simultaneously.
     # @BEGIN sponsors_providing_both_breakfast_and_lunch
     # @PARAM event_name
-    # @IN g  @AS input_data_file  @URI file: menu.csv
-    # @OUT pp  @AS sponsors_providing_both_breakfast_and_lunch.csv
+    # @IN pre_cleaned_data @AS menu.csv  @URI file: menu.csv
+    # @OUT output @AS sponsors_providing_both_breakfast_and_lunch.csv
     sponsors_providing_breakfast = select_sponsor_by_event(Event.BREAKFAST)
     sponsors_providing_breakfast = process_result(sponsors_providing_breakfast)
     print("The total number of sponsors which provides breakfast is:", len(sponsors_providing_breakfast))
@@ -113,8 +119,8 @@ def enact():
     """
     # @BEGIN sponsors_in_NYC
     # @PARAM location
-    # @IN g  @AS input_data_file  @URI file: menu.csv
-    # @OUT pp  @AS sponsors_in_NYC.csv
+    # @IN pre_cleaned_data @AS menu.csv  @URI file: menu.csv
+    # @OUT output @AS sponsors_in_NYC.csv
     sponsors_in_NYC = select_sponsor_by_locations(["NEW YORK, NY", "NEW YORK,NY", "NEW YORK", "NYC"])
     sponsors_in_NYC = process_result(sponsors_in_NYC)
     # print(sponsors_in_NYC.to_string())
@@ -123,7 +129,7 @@ def enact():
     # @END sponsors_in_NYC
 
 
-# @END main
+# @END data_cleaning_for_Menu
 
 
 if __name__ == '__main__':
